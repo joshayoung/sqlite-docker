@@ -1,12 +1,8 @@
-FROM ubuntu:20.04
+FROM alpine:3.14
+RUN apk add --no-cache sqlite
 
-RUN apt update
+COPY commands.sh /scripts/commands.sh
 
-RUN apt install sqlite3 -y
+RUN ["chmod", "+x", "/scripts/commands.sh"]
 
-
-#ENTRYPOINT ["/bin/bash"]
-ENTRYPOINT [ "sqlite3" ]
-
-# The command passed to 'docker run' will override this:
-CMD ["--version"]
+ENTRYPOINT [ "/scripts/commands.sh" ]
